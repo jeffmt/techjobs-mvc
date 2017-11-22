@@ -28,9 +28,10 @@
     </div>
 
     <table th:fragment="job-listing" class="job-listing" th:each="job: ${jobs}">
-        <tr th:each="mapEntry: ${job}">
+        <tr th:each="mapEntry: ${job}" th:switch="${mapEntry.key}">
             <td th:text="${#strings.capitalizeWords(mapEntry.key)}"></td>
-            <td th:text="${mapEntry.value}"></td>
+            <td th:case="'name'" th:text="${mapEntry.value}"></td>
+            <td th:case="*"><a th:href="@{/list/jobs(column=${mapEntry.key},value=${mapEntry.value})}" th:text="${mapEntry.value}"></a></td>
         </tr>
     </table>
 
